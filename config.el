@@ -6,7 +6,7 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Ahmad Adzlan Fadzli Bin Khairi"
+(setq user-full-name "Ahmad Adzlan Fadzli bin Khairi"
       user-mail-address "kaafadzli@unimas.my")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
@@ -21,10 +21,10 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 15)
-      doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 15)
+(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
+      doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
       ;; projectile-project-search-path '("~/Documents" "/mnt/c/Users/alan_" "~/Documents/roam" "/mnt/c/Users/alan_/Dropbox/org" )
-      projectile-project-search-path '("~/Documents" "~/Dropbox")
+      projectile-project-search-path '("~/Documents" "~/Dropbox" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
 )
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -41,7 +41,23 @@
       org-journal-file-format "%Y-%m-%d.org")
 
 (after! org
-  (setq org-agenda-files '( "~/Dropbox/org"))
+  (load! "project-flight-logs")
+  (setq org-agenda-files (append '("~/Dropbox/org") my/project-flight-logs))
+
+  ;; To-Do keyword sequence with Nerd Font icons (Font Awesome 4 codepoints --
+  ;; the oldest/most universally-patched icon set, present in any Nerd Font
+  ;; build). Swap the glyph characters below if they don't render to taste.
+  (setq org-todo-keywords
+        '((sequence " TODO(t)" " WAITING(w@/!)" "|" " DONE(d!)" " CANCELLED(c@)")))
+  (setq org-todo-keyword-faces
+        '((" TODO" . (:foreground "#ff6c6b" :weight bold))
+          (" WAITING" . (:foreground "#ECBE7B" :weight bold))
+          (" DONE" . (:foreground "#98be65" :weight bold))
+          (" CANCELLED" . (:foreground "#5B6268" :weight bold))))
+  ;; Automatic CLOSED: timestamp + :LOGBOOK: state-change entry on DONE
+  (setq org-log-done 'time
+        org-log-into-drawer t)
+  (add-hook 'org-mode-hook #'org-modern-mode)
 )
 
 (setq org-roam-directory "~/Dropbox/roam")
@@ -66,6 +82,14 @@
       :desc "LaTeX compile and view"
       "l" #'TeX-command-run-all)
 
+(after! tex
+      ;; Set Okular as the default PDF viewer for LaTeX output
+      (setq TeX-view-program-selection '((output-pdf "Okular")))
+
+      ;; Custom command for Okular to handle SyncTeX reverse search properly
+      ;; (--unique prevents Okular from opening a new window for every update)
+      (setq TeX-view-program-list '(("Okular" "okular --unique file:%o#src:%n%b"))))
+
 ;; Save buffer using right-hand key combo.
 (map! :leader
       (:prefix ("j" . "Right-hand combo")
@@ -75,6 +99,10 @@
 ;; Load vimrc-mode
 (require 'vimrc-mode)
 (add-to-list 'auto-mode-alist '("\\.vim\\(rc\\)?\\'" . vimrc-mode))
+
+;; Load arduino-mode
+(require 'arduino-mode)
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . arduino-mode))
 
 ;; Load calfw and calfw-org
 (require 'calfw)
@@ -94,3 +122,13 @@
 
 ;; Set fancy splash screen image.
 (setq fancy-splash-image (concat doom-user-dir "doom-splash.png"))
+
+;; Set the path to mmdc (adjust to your system)
+(setq ob-mermaid-cli-path "/home/adzlan/.npm-global/bin/mmdc")
+;; Optional: Enable mermaid-mode for .mmd files
+(use-package! mermaid-mode
+  :mode "\\.mmd\\'")
+
+;; Optional: Configure ob-mermaid for org-babel
+(use-package! ob-mermaid
+  :after org)
