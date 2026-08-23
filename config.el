@@ -155,6 +155,22 @@
 ;; zen from scaling text up (it otherwise defaults to +2).
 (setq +zen-text-scale 0)
 
+;; The :checkers grammar module's `langtool' package guesses a classpath of
+;; /usr/share/languagetool:/usr/share/java/languagetool/* on Linux, which
+;; matches Debian's `languagetool' apt package -- not available on Ubuntu
+;; 22.04. Point it at the official standalone build installed manually to
+;; /usr/share/languagetool instead. This must be set before `langtool' is
+;; first loaded (M-x langtool-check et al are autoloaded/deferred), since
+;; the module's own :config only guesses langtool-java-classpath when none
+;; of langtool-bin/langtool-language-tool-jar/langtool-java-classpath are
+;; already set.
+(setq langtool-language-tool-jar "/usr/share/languagetool/languagetool-commandline.jar")
+;; LanguageTool 6.6 needs Java 17+ (UnsupportedClassVersionError on the
+;; system default, Java 11) -- point langtool at the 17 JRE installed
+;; alongside it (`sudo apt install openjdk-17-jre-headless') without
+;; touching the system-wide `java' alternative.
+(setq langtool-java-bin "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
+
 ;; The :checkers grammar module auto-enables writegood-mode (weasel-word /
 ;; passive-voice highlighting) on every prose buffer, which wasn't asked for.
 ;; Keep LanguageTool's on-demand grammar check but drop this auto-highlight.
