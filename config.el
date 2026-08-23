@@ -24,9 +24,9 @@
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
       ;; A real proportional face for prose (zen's mixed-pitch-mode), distinct
       ;; from the monospace coding font above.
-      doom-variable-pitch-font (font-spec :family "EB Garamond" :size 18)
+      doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 20)
       ;; projectile-project-search-path '("~/Documents" "/mnt/c/Users/alan_" "~/Documents/roam" "/mnt/c/Users/alan_/Dropbox/org" )
-      projectile-project-search-path '("~/Documents" "~/Dropbox" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
+      projectile-project-search-path '("~/Projects" "~/Documents" "~/Dropbox" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
 )
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -36,7 +36,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Dropbox/org")
+(setq org-directory "~/Projects/org")
 
 ;; Set org-journal-date-format
 (setq org-journal-date-format "%A, %Y-%m-%d"
@@ -89,13 +89,8 @@
       :desc "LaTeX compile and view"
       "l" #'TeX-command-run-all)
 
-(after! tex
-      ;; Set Okular as the default PDF viewer for LaTeX output
-      (setq TeX-view-program-selection '((output-pdf "Okular")))
-
-      ;; Custom command for Okular to handle SyncTeX reverse search properly
-      ;; (--unique prevents Okular from opening a new window for every update)
-      (setq TeX-view-program-list '(("Okular" "okular --unique file:%o#src:%n%b"))))
+;; Prefer Okular; Doom's :lang latex module handles the SyncTeX setup.
+(setq +latex-viewers '(okular))
 
 ;; Save buffer using right-hand key combo.
 (map! :leader
