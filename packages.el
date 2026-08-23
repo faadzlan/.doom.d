@@ -13,6 +13,8 @@
 (package! vimrc-mode)
 ;; ahk-mode - Major mode for autohotkey files
 (package! ahk-mode)
+;; arduino-mode - Major mode for Arduino .ino sketches
+(package! arduino-mode)
 ;; calfw - Calendar view from within org-agenda
 (package! calfw)
 (package! calfw-org)
@@ -48,6 +50,13 @@
 ;; Use `:pin' to specify a particular commit to install.
 ;(package! builtin-package :pin "1a2b3c4d5e")
 
+(package! git-commit
+  :recipe (:host github :repo "magit/magit"
+           :files ("lisp/git-commit.el" "lisp/git-commit-pkg.el")))
+
+(package! magit-section
+  :recipe (:host github :repo "magit/magit"
+           :files ("lisp/magit-section.el" "lisp/magit-section-pkg.el")))
 
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
@@ -56,3 +65,6 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! mermaid-mode)
+(package! ob-mermaid)

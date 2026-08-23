@@ -44,13 +44,16 @@
   (load! "project-flight-logs")
   (setq org-agenda-files (append '("~/Dropbox/org") my/project-flight-logs))
 
+  ;; To-Do keyword sequence with Nerd Font icons (Font Awesome 4 codepoints --
+  ;; the oldest/most universally-patched icon set, present in any Nerd Font
+  ;; build). Swap the glyph characters below if they don't render to taste.
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELLED(c@)")))
+        '((sequence " TODO(t)" " WAITING(w@/!)" "|" " DONE(d!)" " CANCELLED(c@)")))
   (setq org-todo-keyword-faces
-        '(("TODO" . (:foreground "#ff6c6b" :weight bold))
-          ("WAITING" . (:foreground "#ECBE7B" :weight bold))
-          ("DONE" . (:foreground "#98be65" :weight bold))
-          ("CANCELLED" . (:foreground "#5B6268" :weight bold))))
+        '((" TODO" . (:foreground "#ff6c6b" :weight bold))
+          (" WAITING" . (:foreground "#ECBE7B" :weight bold))
+          (" DONE" . (:foreground "#98be65" :weight bold))
+          (" CANCELLED" . (:foreground "#5B6268" :weight bold))))
   ;; Automatic CLOSED: timestamp + :LOGBOOK: state-change entry on DONE
   (setq org-log-done 'time
         org-log-into-drawer t)

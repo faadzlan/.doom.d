@@ -3,4 +3,18 @@
 ;; scaffolded project, appended whenever a new project is created via
 ;; ~/Documents/project_template/init_project.sh.
 (defvar my/project-flight-logs
-  '("/mnt/c/Users/faadz/Projects/waterwheel_turbine_upscaling/FLIGHT_LOG.org"))
+  '("/mnt/c/Users/faadz/Projects/waterwheel_turbine_upscaling/FLIGHT_LOG.org"
+    "/mnt/g/My Drive/Work/2025_2026_2/swa_akreditasi/FLIGHT_LOG.org"
+    "/mnt/g/My Drive/Research/MentorGrant/lundu_publication/FLIGHT_LOG.org"
+    "/mnt/c/Users/faadz/Projects/vortex_generator_paper/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/wastewater_to_resources/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/bidara_bioactive_compounds/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/generalised_cruciform_energy_harvester/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/renewable_energy_sustainability_awareness/FLIGHT_LOG.org"
+    "/mnt/g/My Drive/RIEC/2026/09-TravelClaims/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/OpenFoam/rotary_dryer/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/wolfram_script_usage/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/OpenFoam/mobile_clothes_drying_rack/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/OpenFoam/emergency_floating_storage/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/reference_pd_thesis/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/pengurusan_penyelidikan_di_ppp_ipta/FLIGHT_LOG.org"))
