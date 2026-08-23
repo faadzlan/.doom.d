@@ -145,7 +145,7 @@
 ;; Default dictionary. A second (Malay, ms_MY) dictionary can be added here
 ;; once its hunspell .aff/.dic files are installed (see AGENTS/plan notes) --
 ;; then switch per-buffer with `ispell-change-dictionary'.
-(setq ispell-dictionary "en_US")
+(setq ispell-dictionary "en_GB")
 
 ;; org-modern's boxed labels/tables assume a stable, unscaled buffer, so keep
 ;; zen from scaling text up (it otherwise defaults to +2).
