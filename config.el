@@ -44,7 +44,7 @@
 
 (after! org
   (load! "project-flight-logs")
-  (setq org-agenda-files (append '("~/Dropbox/org") my/project-flight-logs))
+  (setq org-agenda-files (append '("~/Projects/org") my/project-flight-logs))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELLED(c@)")))
@@ -67,7 +67,7 @@
       (:prefix ("b" . "tables")
        "w" #'org-table-toggle-column-width))
 
-(setq org-roam-directory "~/Dropbox/roam")
+(setq org-roam-directory "~/Projects/roam")
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
