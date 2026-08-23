@@ -22,7 +22,9 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
-      doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
+      ;; A real proportional face for prose (zen's mixed-pitch-mode), distinct
+      ;; from the monospace coding font above.
+      doom-variable-pitch-font (font-spec :family "EB Garamond" :size 18)
       ;; projectile-project-search-path '("~/Documents" "/mnt/c/Users/alan_" "~/Documents/roam" "/mnt/c/Users/alan_/Dropbox/org" )
       projectile-project-search-path '("~/Documents" "~/Dropbox" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
 )
@@ -137,3 +139,40 @@
 ;; Optional: Configure ob-mermaid for org-babel
 (use-package! ob-mermaid
   :after org)
+
+;; --- Writing experience: spelling, grammar, zen, word lookup -------------
+
+;; Default dictionary. A second (Malay, ms_MY) dictionary can be added here
+;; once its hunspell .aff/.dic files are installed (see AGENTS/plan notes) --
+;; then switch per-buffer with `ispell-change-dictionary'.
+(setq ispell-dictionary "en_US")
+
+;; org-modern's boxed labels/tables assume a stable, unscaled buffer, so keep
+;; zen from scaling text up (it otherwise defaults to +2).
+(setq +zen-text-scale 0)
+
+;; The :checkers grammar module auto-enables writegood-mode (weasel-word /
+;; passive-voice highlighting) on every prose buffer, which wasn't asked for.
+;; Keep LanguageTool's on-demand grammar check but drop this auto-highlight.
+(after! writegood-mode
+  (dolist (hook '(org-mode-hook markdown-mode-hook latex-mode-hook LaTeX-mode-hook))
+    (remove-hook hook #'writegood-mode)))
+
+;; Don't spellcheck very large buffers automatically (org-agenda files,
+;; roam nodes) -- it adds noticeable latency just opening them.
+(add-hook! 'flyspell-mode-hook
+  (when (> (buffer-size) 200000)
+    (flyspell-mode -1)))
+
+;; Quick word lookups without leaving Emacs.
+(use-package! define-word
+  :commands (define-word define-word-at-point))
+
+(use-package! powerthesaurus
+  :commands (powerthesaurus-lookup-word-at-point
+             powerthesaurus-lookup-word-dwim))
+
+(map! :leader
+      (:prefix ("j" . "Right-hand combo")
+       :desc "Define word at point" "d" #'define-word-at-point
+       :desc "Thesaurus lookup" "t" #'powerthesaurus-lookup-word-dwim))

@@ -68,3 +68,8 @@
 
 (package! mermaid-mode)
 (package! ob-mermaid)
+
+;; define-word - quick dictionary lookup at point
+(package! define-word)
+;; powerthesaurus - quick synonym/thesaurus lookup at point
+(package! powerthesaurus)
