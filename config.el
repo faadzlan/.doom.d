@@ -142,13 +142,14 @@
 
 ;; --- Writing experience: spelling, grammar, zen, word lookup -------------
 
-;; Default dictionary. ms_MY (from syafiqhadzir/hunspell-ms, installed at
-;; /usr/share/hunspell/) is registered as a second option below -- switch
-;; per-buffer with `ispell-change-dictionary' (SPC t s).
+;; Default dictionary. Emacs auto-discovers every hunspell dict found via
+;; `hunspell -D' (including ms_MY, installed from syafiqhadzir/hunspell-ms
+;; at /usr/share/hunspell/) -- no manual `ispell-hunspell-dictionary-alist'
+;; entry needed. IMPORTANT: don't pre-seed that alist yourself; ispell only
+;; runs auto-discovery when it's still nil (see `ispell-set-spellchecker-params'
+;; in ispell.el), so setting it early silently breaks discovery of every
+;; other dictionary. Switch per-buffer with `ispell-change-dictionary' (SPC t s).
 (setq ispell-dictionary "en_GB")
-(after! ispell
-  (add-to-list 'ispell-hunspell-dictionary-alist
-               '("ms_MY" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "ms_MY") nil utf-8)))
 
 ;; org-modern's boxed labels/tables assume a stable, unscaled buffer, so keep
 ;; zen from scaling text up (it otherwise defaults to +2).
