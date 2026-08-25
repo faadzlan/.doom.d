@@ -24,7 +24,7 @@
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
       ;; A real proportional face for prose (zen's mixed-pitch-mode), distinct
       ;; from the monospace coding font above.
-      doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 20)
+      doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
       ;; projectile-project-search-path '("~/Documents" "/mnt/c/Users/alan_" "~/Documents/roam" "/mnt/c/Users/alan_/Dropbox/org" )
       projectile-project-search-path '("~/Projects" "~/Documents" "~/Dropbox" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
 )
@@ -147,8 +147,17 @@
 (setq ispell-dictionary "en_GB")
 
 ;; org-modern's boxed labels/tables assume a stable, unscaled buffer, so keep
-;; zen from scaling text up (it otherwise defaults to +2).
-(setq +zen-text-scale 0)
+;; zen from scaling text in org-mode -- but LaTeX/markdown/prose buffers
+;; should still get bigger text on zen toggle. Doom's own guard
+;; (`+zen-text-scale' = 0) is all-or-nothing across every major mode, so
+;; override the hook to skip scaling only in org-mode instead.
+(setq +zen-text-scale 1)
+(setq writeroom-width 70)
+(after! writeroom-mode
+  (defun +zen-enable-text-scaling-mode-h ()
+    (unless (derived-mode-p 'org-mode)
+      (text-scale-set (if writeroom-mode +zen-text-scale 0))
+      (visual-fill-column-adjust))))
 
 ;; The :checkers grammar module's `langtool' package guesses a classpath of
 ;; /usr/share/languagetool:/usr/share/java/languagetool/* on Linux, which
