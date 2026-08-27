@@ -25,8 +25,7 @@
       ;; A real proportional face for prose (zen's mixed-pitch-mode), distinct
       ;; from the monospace coding font above.
       doom-variable-pitch-font (font-spec :family "SauceCodePro Nerd Font" :size 16)
-      ;; projectile-project-search-path '("~/Documents" "/mnt/c/Users/alan_" "~/Documents/roam" "/mnt/c/Users/alan_/Dropbox/org" )
-      projectile-project-search-path '("~/Projects" "~/Documents" "~/Dropbox" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
+      projectile-project-search-path '("~/Projects" "~/Documents" "/mnt/c/Users/faadz/Projects" "/mnt/c/Users/faadz/Downloads")
 )
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -72,6 +71,17 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
+;;; ============================================================================
+;;; Dashboard Configuration
+;;; ============================================================================
+
+;; Custom dashboard logo image
+;; Use fancy-splash-image for custom images (NOT +doom-dashboard-banner-file)
+(setq fancy-splash-image
+      (expand-file-name "doom-splash.png" doom-private-dir))
+
+;; Padding around the dashboard banner (vertical . horizontal)
+(setq +doom-dashboard-banner-padding '(4 . 4))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -122,8 +132,6 @@
           (lambda ()
             (call-interactively #'save-buffer)))
 
-;; Set fancy splash screen image.
-(setq fancy-splash-image (concat doom-user-dir "doom-splash.png"))
 
 ;; Set the path to mmdc (adjust to your system)
 (setq ob-mermaid-cli-path "/home/adzlan/.npm-global/bin/mmdc")
