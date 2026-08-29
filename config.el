@@ -154,18 +154,11 @@
 ;; other dictionary. Switch per-buffer with `ispell-change-dictionary' (SPC t s).
 (setq ispell-dictionary "en_GB")
 
-;; org-modern's boxed labels/tables assume a stable, unscaled buffer, so keep
-;; zen from scaling text in org-mode -- but LaTeX/markdown/prose buffers
-;; should still get bigger text on zen toggle. Doom's own guard
-;; (`+zen-text-scale' = 0) is all-or-nothing across every major mode, so
-;; override the hook to skip scaling only in org-mode instead.
+;; Scale text on zen toggle in every mode, org included. (org-mode used to be
+;; excluded here because org-modern's boxed labels/tables assume a stable,
+;; unscaled buffer -- if they render badly at this scale, that's why.)
 (setq +zen-text-scale 1)
 (setq writeroom-width 70)
-(after! writeroom-mode
-  (defun +zen-enable-text-scaling-mode-h ()
-    (unless (derived-mode-p 'org-mode)
-      (text-scale-set (if writeroom-mode +zen-text-scale 0))
-      (visual-fill-column-adjust))))
 
 ;; The :checkers grammar module's `langtool' package guesses a classpath of
 ;; /usr/share/languagetool:/usr/share/java/languagetool/* on Linux, which

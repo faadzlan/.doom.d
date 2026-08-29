@@ -17,4 +17,5 @@
     "/home/adzlan/Projects/OpenFoam/mobile_clothes_drying_rack/FLIGHT_LOG.org"
     "/home/adzlan/Projects/OpenFoam/emergency_floating_storage/FLIGHT_LOG.org"
     "/home/adzlan/Projects/reference_pd_thesis/FLIGHT_LOG.org"
-    "/home/adzlan/Projects/pengurusan_penyelidikan_di_ppp_ipta/FLIGHT_LOG.org"))
+    "/home/adzlan/Projects/pengurusan_penyelidikan_di_ppp_ipta/FLIGHT_LOG.org"
+    "/home/adzlan/Projects/digital_economy_awards_2026/FLIGHT_LOG.org"))
