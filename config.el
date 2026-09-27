@@ -200,6 +200,39 @@
   (when (> (buffer-size) 200000)
     (flyspell-mode -1)))
 
+;; Hunspell can't segment Japanese, so in buffers mixing English and
+;; Japanese (e.g. kanji glossaries) flyspell flags every kana/kanji run and
+;; floods the echo area with "XXX - NN: word not found" (hunspell's
+;; fragments don't match anything flyspell can find back in the buffer).
+;; Keep English spellchecking but make Japanese invisible to it, on both
+;; paths flyspell uses:
+;;  - region checks (flyspell-buffer / flyspell-lazy) pipe the raw text to
+;;    hunspell via `ispell-call-process-region' -- blank out Japanese runs
+;;    first. Only the misspelled-word list comes back and flyspell searches
+;;    for those words in the real buffer, so blanking doesn't shift positions.
+;;  - per-word checks while typing go through `flyspell-word' -- treat any
+;;    word containing Japanese as correct.
+(defconst +spell-japanese-re "\\(?:\\cj\\|\\cH\\|\\cK\\|\\cC\\)+"
+  "Runs of Japanese text (kana, kanji, JIS punctuation) hidden from hunspell.")
+
+(defadvice! +spell-blank-japanese-a (fn start end &rest args)
+  :around #'ispell-call-process-region
+  (if (and (numberp start) (numberp end)
+           (save-excursion (goto-char start) (re-search-forward +spell-japanese-re end t)))
+      (let ((text (buffer-substring-no-properties start end)))
+        (with-temp-buffer
+          (insert (replace-regexp-in-string
+                   +spell-japanese-re (lambda (m) (make-string (length m) ?\s)) text t t))
+          (apply fn (point-min) (point-max) args)))
+    (apply fn start end args)))
+
+(defadvice! +spell-skip-japanese-word-a (fn &rest args)
+  :around #'flyspell-word
+  (let ((word (car-safe (save-excursion (flyspell-get-word (car args))))))
+    (if (and word (string-match-p +spell-japanese-re word))
+        t
+      (apply fn args))))
+
 ;; Quick word lookups without leaving Emacs.
 (use-package! define-word
   :commands (define-word define-word-at-point))
