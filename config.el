@@ -102,6 +102,17 @@
 ;; Prefer Okular; Doom's :lang latex module handles the SyncTeX setup.
 (setq +latex-viewers '(okular))
 
+;; Doom's built-in Okular command wraps %o (a relative PDF path) in a
+;; literal "file:" scheme, which is not a valid absolute file: URI --
+;; Okular/Qt's URL parser can silently fail to resolve it (fails to
+;; open a fresh window, and fails to jump-to-line via --unique on an
+;; already-open one), especially on a path with a space in it (e.g. a
+;; mounted "My Drive" folder). Drop the "file:" prefix and pass %o as
+;; a plain path instead, matching upstream AUCTeX's own default.
+(after! tex
+  (setcar (cdr (assoc "Okular" TeX-view-program-list))
+          '("okular --noraise --unique %o" (mode-io-correlate "#src:%n%a"))))
+
 ;; Save buffer using right-hand key combo.
 (map! :leader
       (:prefix ("j" . "Right-hand combo")
